@@ -24,26 +24,15 @@
       <v-divider></v-divider>
       <v-list dense >
         <v-list-item-group v-model="channel">
-          <v-list-item
-          link
+          <v-list-item v-for="c in channels" :key="c"
+          link @click="playVideo(c.src)"
           >
             <v-list-item-avatar tile>
-              <v-img src="http://ustvgo.tv/wp-content/uploads/2019/09/wwe-269x151.png"></v-img>
+              <v-img :src="c.img"></v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>Cartoon Network</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item
-            link
-          >
-            <v-list-item-avatar tile>
-              <v-img src="http://ustvgo.tv/wp-content/uploads/2019/09/wwe-269x151.png"></v-img>
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title>Cartoon Network</v-list-item-title>
+              <v-list-item-title>{{c.title}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -109,7 +98,14 @@
     data: () => ({
       drawer: null,
       mini: false,
-      channel: 0,
+      channel: -1,
+      channels: [
+        {
+          src: "http://peer3.savitar.tv/Boomerang/myStream/playlist.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9MTAvMjIvMjAxOSA3OjI1OjEzIEFNJmhhc2hfdmFsdWU9ZGR3M2krZ2E2ZEczUys5c1M3R2d3UT09JnZhbGlkbWludXRlcz0zNjAmaWQ9MA==",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/Boomerang.png",
+          title: "Boomerang"
+        }
+      ],
       playerOptions: {
         autoplay: true,
         controls: true,
@@ -140,8 +136,7 @@
       }
     },
     mounted () {
-      const src = 'http://peer2.savitar.tv/CN/myStream/playlist.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9MTAvMjIvMjAxOSA1OjQ5OjQyIEFNJmhhc2hfdmFsdWU9UVJNNHBiSGpSNDJmd3U1bnY0OUZodz09JnZhbGlkbWludXRlcz0zNjAmaWQ9MA=='
-      // this.playVideo(src)
+      // this.playVideo(this.channels[0].src)
     }
   }
 </script>
