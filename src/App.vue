@@ -5,9 +5,49 @@
       :clipped="$vuetify.breakpoint.lgAndUp"
       app
       :width="300"
+      :mini-variant.sync="mini"
     >
-      <v-list dense>
-       
+      <v-list-item>
+        <v-list-item-icon>
+            <v-icon>mdi-youtube-tv</v-icon>
+          </v-list-item-icon>
+        <v-list-item-title>List Channels</v-list-item-title>
+
+        <v-btn
+          icon
+          @click.stop="mini = !mini"
+        >
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+      </v-list-item>
+
+      <v-divider></v-divider>
+      <v-list dense >
+        <v-list-item-group v-model="channel">
+          <v-list-item
+          link
+          >
+            <v-list-item-avatar tile>
+              <v-img src="http://ustvgo.tv/wp-content/uploads/2019/09/wwe-269x151.png"></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>Cartoon Network</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <v-list-item
+            link
+          >
+            <v-list-item-avatar tile>
+              <v-img src="http://ustvgo.tv/wp-content/uploads/2019/09/wwe-269x151.png"></v-img>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>Cartoon Network</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+        
       </v-list>
     </v-navigation-drawer>
 
@@ -15,13 +55,11 @@
       :clipped-left="$vuetify.breakpoint.lgAndUp"
       app
       dark
-
       color="red"
       dense
     >
       <v-toolbar-title
         style="width: 300px"
-        class="ml-0 pl-4"
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-icon class="mx-4">mdi-youtube</v-icon>
@@ -44,14 +82,15 @@
       </v-btn>
     </v-app-bar>
     <v-content>
-      <v-container
-        class="fill-height"
-        fluid
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
+      <v-container fluid grid-list-lg fill-height>
+        <v-row  no-gutters>
+          <v-col>
+            <video-player ref="videoPlayer"
+                          class="vjs-custom-skin"
+                          :options="playerOptions"
+                          @ready="onPlayerReady($event)">
+            </video-player>
+          </v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -59,12 +98,65 @@
 </template>
 
 <script>
+  import {videoPlayer} from 'vue-videojs7'
   export default {
     props: {
       source: String,
     },
+    components: {
+      videoPlayer
+    },
     data: () => ({
       drawer: null,
+      mini: false,
+      channel: 0,
+      playerOptions: {
+        autoplay: true,
+        controls: true,
+        controlBar: {
+          timeDivider: false,
+          durationDisplay: false
+        }
+      }
     }),
+    computed: {
+      player () {
+        return this.$refs.videoPlayer.player
+      }
+    },
+    methods: {
+      onPlayerReady (player) {
+        this.player.play()
+      },
+      playVideo: function (source) {
+        const video = {
+          withCredentials: false,
+          type: 'application/x-mpegurl',
+          src: source
+        }
+        this.player.reset() // in IE11 (mode IE10) direct usage of src() when <src> is already set, generated errors,
+        this.player.src(video)
+        this.player.play()
+      }
+    },
+    mounted () {
+      const src = 'http://peer2.savitar.tv/CN/myStream/playlist.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9MTAvMjIvMjAxOSA1OjQ5OjQyIEFNJmhhc2hfdmFsdWU9UVJNNHBiSGpSNDJmd3U1bnY0OUZodz09JnZhbGlkbWludXRlcz0zNjAmaWQ9MA=='
+      // this.playVideo(src)
+    }
   }
 </script>
+<style scoped>
+  .player {
+    position: absolute !important;
+    width: 50vw;
+    height: 100%;
+  }
+  .vjs-custom-skin {
+    height: 90vh !important;
+  }
+
+  .vjs-custom-skin /deep/ .video-js {
+    height: 100%;
+    width: 100%;
+  }
+</style>
