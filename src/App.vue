@@ -25,7 +25,7 @@
       <v-list dense >
         <v-list-item-group v-model="channel">
           <v-list-item v-for="c in channels" :key="c"
-          link @click="playVideo(c.src)"
+          link @click="playVideo(c.src)" :title="c.title"
           >
             <v-list-item-avatar tile>
               <v-img :src="c.img"></v-img>
@@ -88,6 +88,8 @@
 
 <script>
   import {videoPlayer} from 'vue-videojs7'
+  const axios = require('axios');
+
   export default {
     props: {
       source: String,
@@ -99,11 +101,42 @@
       drawer: null,
       mini: false,
       channel: -1,
+      auth: '',
       channels: [
         {
-          src: "http://peer3.savitar.tv/Boomerang/myStream/playlist.m3u8?wmsAuthSign=c2VydmVyX3RpbWU9MTAvMjIvMjAxOSA3OjI1OjEzIEFNJmhhc2hfdmFsdWU9ZGR3M2krZ2E2ZEczUys5c1M3R2d3UT09JnZhbGlkbWludXRlcz0zNjAmaWQ9MA==",
+          src: "http://peer3.savitar.tv/AE/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/AE.png",
+          title: "A&E"
+        },
+        {
+          src: "http://peer3.savitar.tv/ABC/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2018/10/abc-269x151.jpg",
+          title: "ABC"
+        },
+        {
+          src: "http://peer3.savitar.tv/AMC/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/AMC-1.png",
+          title: "AMC"
+        },
+        {
+          src: "http://peer3.savitar.tv/Boomerang/myStream/playlist.m3u8?wmsAuthSign=",
           img: "http://ustvgo.tv/wp-content/uploads/2019/08/Boomerang.png",
           title: "Boomerang"
+        },
+        {
+          src: "http://peer3.savitar.tv/CN/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/cartoon-network.jpg",
+          title: "Cartoon Network"
+        },
+        {
+          src: "http://peer3.savitar.tv/ESPN/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/espn-269x151.png",
+          title: "ESPN"
+        },
+        {
+          src: "http://peer4.savitar.tv/NBA/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/nbatv-269x151.jpg",
+          title: "NBA TV"
         }
       ],
       playerOptions: {
@@ -128,15 +161,21 @@
         const video = {
           withCredentials: false,
           type: 'application/x-mpegurl',
-          src: source
+          src: source + this.auth
         }
         this.player.reset() // in IE11 (mode IE10) direct usage of src() when <src> is already set, generated errors,
         this.player.src(video)
         this.player.play()
+      },
+      getAuth(){
+        axios.get('http://armusic.cf/getauth.php').then(({data}) => {
+          this.auth = data.auth
+        })
       }
     },
     mounted () {
       // this.playVideo(this.channels[0].src)
+      this.getAuth()
     }
   }
 </script>
