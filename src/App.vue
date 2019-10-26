@@ -23,20 +23,26 @@
 
       <v-divider></v-divider>
       <v-list dense >
-        <v-list-item-group v-model="channel">
-          <v-list-item v-for="c in channels" :key="c"
-          link @click="playVideo(c.src)" :title="c.title"
-          >
-            <v-list-item-avatar tile>
-              <v-img :src="c.img"></v-img>
-            </v-list-item-avatar>
+        <v-skeleton-loader
+          :loading="loading"
+          transition="fade-transition"
+          height="94"
+          type="list-item-avatar"
+        >
+          <v-list-item-group v-model="channel">
+            <v-list-item v-for="c in channels" :key="c"
+            link @click="playVideo(c.src)" :title="c.title"
+            >
+              <v-list-item-avatar tile>
+                <v-img :src="c.img"></v-img>
+              </v-list-item-avatar>
 
-            <v-list-item-content>
-              <v-list-item-title>{{c.title}}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-        
+              <v-list-item-content>
+                <v-list-item-title>{{c.title}}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-skeleton-loader>
       </v-list>
     </v-navigation-drawer>
 
@@ -64,8 +70,8 @@
           item
         >
           <v-img
-            src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
-            alt="Vuetify"
+            src="@/assets/ARMUSIC_LOGO.png"
+            alt="LiveTV"
           >
           </v-img></v-avatar>
       </v-btn>
@@ -99,6 +105,7 @@
     },
     data: () => ({
       drawer: null,
+      loading: true,
       mini: false,
       channel: -1,
       auth: '',
@@ -170,6 +177,7 @@
       getAuth(){
         axios.get('http://armusic.cf/getauth.php').then(({data}) => {
           this.auth = data.auth
+          this.loading = false
         })
       }
     },
