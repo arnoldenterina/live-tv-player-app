@@ -175,7 +175,7 @@
         this.player.play()
       },
       getAuth(){
-        axios.get('http://armusic.cf/getauth.php').then(({data}) => {
+        axios.get('http://arlivetv.cf/getauth.php').then(({data}) => {
           this.auth = data.auth
           this.loading = false
         })
