@@ -30,7 +30,7 @@
           type="list-item-avatar"
         >
           <v-list-item-group v-model="channel">
-            <v-list-item v-for="c in channels" :key="c"
+            <v-list-item v-for="(c, index) in channels" :key="`c-${index}`"
             link @click="playVideo(c.src)" :title="c.title"
             >
               <v-list-item-avatar tile>
@@ -58,7 +58,7 @@
       >
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-icon class="mx-4">mdi-youtube</v-icon>
-        <span class="hidden-sm-and-down">LiveTV App</span>
+        <span class="hidden-sm-and-down">ARLive TV</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn
@@ -126,6 +126,11 @@
           title: "AMC"
         },
         {
+          src: "http://peer3.savitar.tv/Animal/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/animal-planet.png",
+          title: "Animal Planet"
+        },
+        {
           src: "http://peer3.savitar.tv/Boomerang/myStream/playlist.m3u8?wmsAuthSign=",
           img: "http://ustvgo.tv/wp-content/uploads/2019/08/Boomerang.png",
           title: "Boomerang"
@@ -136,14 +141,149 @@
           title: "Cartoon Network"
         },
         {
+          src: "http://peer3.savitar.tv/CNN/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2018/10/CNN-1.png",
+          title: "CNN"
+        },
+        {
+          src: "http://peer3.savitar.tv/Comedy/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/comedy-central-269x151.png",
+          title: "Comedy Central"
+        },
+        {
+          src: "http://peer3.savitar.tv/Discovery/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/Discovery.png",
+          title: "Discovery Channel"
+        },
+        {
+          src: "http://peer3.savitar.tv/Disney/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/disney-269x151.png",
+          title: "Disney Channel"
+        },
+        {
+          src: "http://peer3.savitar.tv/DisneyJr/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/disney-jr-768x432-1.png",
+          title: "DisneyJr"
+        },
+        {
+          src: "http://peer3.savitar.tv/DisneyXD/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/disney-xd-768x432-1.png",
+          title: "DisneyXD"
+        },
+        {
+          src: "http://peer3.savitar.tv/DIY/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/diy.png",
+          title: "DIY"
+        },
+        {
           src: "http://peer3.savitar.tv/ESPN/myStream/playlist.m3u8?wmsAuthSign=",
           img: "http://ustvgo.tv/wp-content/uploads/2019/01/espn-269x151.png",
           title: "ESPN"
         },
         {
-          src: "http://peer4.savitar.tv/NBA/myStream/playlist.m3u8?wmsAuthSign=",
+          src: "http://peer3.savitar.tv/ESPN2/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/espn2-269x151.png",
+          title: "ESPN 2"
+        },
+        {
+          src: "http://peer3.savitar.tv/FoodNetwork/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/food-network-269x151.png",
+          title: "Food Network"
+        },
+        {
+          src: "http://peer3.savitar.tv/FOX/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2018/10/FOX-1.png",
+          title: "Fox"
+        },
+        {
+          src: "http://peer3.savitar.tv/FoxNews/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2018/10/foxnews.jpg",
+          title: "Fox News"
+        },
+        {
+          src: "http://peer3.savitar.tv/FoxBusiness/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2018/10/foxbusiness.jpg",
+          title: "Fox Business"
+        },
+        {
+          src: "http://peer3.savitar.tv/FS1/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/fs1-269x151.png",
+          title: "Fox Sports 1"
+        },
+        {
+          src: "http://peer3.savitar.tv/FS2/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/fs2-269x151.png",
+          title: "Fox Sports 2"
+        },
+        {
+          src: "http://peer3.savitar.tv/HBO/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/hbo-269x151.png",
+          title: "HBO"
+        },
+        {
+          src: "http://peer3.savitar.tv/HMM/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/HMM_logo_black-700x245.jpg",
+          title: "Hallmark Movies & Mysteries"
+        },
+        {
+          src: "http://peer3.savitar.tv/History/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/History.png",
+          title: "History Channel"
+        },
+        {
+          src: "http://peer3.savitar.tv/LifetimeM/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/lifetimeM.jpeg",
+          title: "Lifetime Movies"
+        },
+        {
+          src: "http://peer3.savitar.tv/MTV/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/mtv.jpg",
+          title: "MTV"
+        },
+        {
+          src: "http://peer3.savitar.tv/NatGEOWild/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/NatGeoWild.jpeg",
+          title: "NAT GEO WILD"
+        },
+        {
+          src: "http://peer3.savitar.tv/NatGEO/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/National-Geographic-269x151.png",
+          title: "National Geographic"
+        },
+        {
+          src: "http://peer3.savitar.tv/NBA/myStream/playlist.m3u8?wmsAuthSign=",
           img: "http://ustvgo.tv/wp-content/uploads/2019/01/nbatv-269x151.jpg",
           title: "NBA TV"
+        },
+        {
+          src: "http://peer3.savitar.tv/NBC/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2018/10/nbc-logo.jpg",
+          title: "NBC"
+        },
+        {
+          src: "http://peer3.savitar.tv/NBCSN/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/nbcsn-269x151.jpg",
+          title: "NBC Sports"
+        },
+        {
+          src: "http://peer3.savitar.tv/Nicktoons/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/nicktoons.png",
+          title: "Nicktoons"
+        },
+        {
+          src: "http://peer3.savitar.tv/Nickelodeon/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/Nickelodeon_2009.png",
+          title: "Nickelodeon"
+        },
+        {
+          src: "http://peer3.savitar.tv/Paramount/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/08/paramount.jpg",
+          title: "Paramount Network"
+        },
+        {
+          src: "http://peer3.savitar.tv/CW/myStream/playlist.m3u8?wmsAuthSign=",
+          img: "http://ustvgo.tv/wp-content/uploads/2019/01/cw-269x151.png",
+          title: "The CW"
         }
       ],
       playerOptions: {
@@ -165,6 +305,7 @@
         this.player.play()
       },
       playVideo: function (source) {
+        console.log("channel", this.channel)
         const video = {
           withCredentials: false,
           type: 'application/x-mpegurl',
@@ -201,4 +342,45 @@
     height: 100%;
     width: 100%;
   }
+
+  .v-navigation-drawer .v-list{
+    height: calc(100vh - 100px);
+    overflow-x: auto;
+  }
+
+  .v-navigation-drawer .v-list::-webkit-scrollbar{
+    width: 10px;
+    background-color: #F5F5F5;
+  }
+  .v-navigation-drawer .v-list::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    background-color: #F5F5F5;
+  }
+  .v-navigation-drawer .v-list::-webkit-scrollbar-thumb{
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+  }
+</style>
+<style>
+  .v-application--wrap .v-navigation-drawer__content{
+    overflow: hidden;
+  }
+    body::-webkit-scrollbar, .v-navigation-drawer[data-booted=true]::-webkit-scrollbar {
+      width: 10px;
+      background-color: #F5F5F5;
+    }
+
+    body::-webkit-scrollbar-track, .v-navigation-drawer[data-booted=true]::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      background-color: #F5F5F5;
+    }
+
+    body::-webkit-scrollbar-thumb, .v-navigation-drawer[data-booted=true]::-webkit-scrollbar-thumb  {
+      border-radius: 8px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #555;
+    }
 </style>
